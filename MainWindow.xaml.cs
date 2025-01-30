@@ -14,18 +14,83 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+//dotnet add package CsvHelper
 namespace MaxTemp
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
+    public class csvData
+    {
+        private string geraetName, datum;
+        private double temperatur;
+        public CsvData getHighTemp(string filePath)
+        {
+         
+            List<CsvData> csvList = new List<CsvData>();
+
+   
+            if (File.Exists(filePath))
+            {
+       
+                using (StreamReader reader = new StreamReader(filePath))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        string[] columns = line.Split(',');
+
+                     
+                        if (columns.Length >= 3)
+                        {
+                            CsvData data = new CsvData
+                            {
+                                Column1 = columns[0],
+                                Column2 = int.TryParse(columns[1], out int col2) ? col2 : 0, 
+                                Column3 = double.TryParse(columns[2], out double col3) ? col3 : 0 
+                            };
+
+                            csvList.Add(data);
+                        }
+                    }
+                }
+
+           
+                if (csvList.Count > 0)
+                {
+                    CsvData highTempData = null;
+
+                    foreach (var data in csvList)
+                    {
+                        if (highTempData == null || data.Column3 > highTempData.Column3)
+                        {
+                            highTempData = data;
+                        }
+                    }
+
+                    return highTempData;
+                }
+            }
+            else
+            {
+                Console.WriteLine("File does not exist.");
+            }
+
+            return null; // Return null if no data found or file is invalid
+        }
+
+
+    };
+        
+    }; 
+    
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
         }
+        c#.readFile(_)
 
         /// <summary>
         /// Diese Routine (EventHandler des Buttons Auswerten) liest die Werte
@@ -49,7 +114,7 @@ namespace MaxTemp
 
             //Höchstwert auf Oberfläche ausgeben.
 
-            MessageBox.Show("Gleich kachelt das Programm...");
+            MessageBox.Show("Implimenting Logic");
             //kommentieren Sie die Exception aus.
             throw new Exception("peng");
         }
