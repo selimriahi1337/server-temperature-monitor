@@ -1,8 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
 namespace MaxTemp
 {
+    /// <summary>
+    /// Interaktionslogik für MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -10,68 +27,31 @@ namespace MaxTemp
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Diese Routine (EventHandler des Buttons Auswerten) liest die Werte
+        /// zeilenweise aus der Datei temps.csv aus, merkt sich den höchsten Wert
+        /// und gibt diesen auf der Oberfläche aus.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnAuswerten_Click(object sender, RoutedEventArgs e)
         {
-            string csvFilePath = @".\temps.csv";
+            //Zugriff auf Datei erstellen.
 
-            if (!File.Exists(csvFilePath))
-            {
-                MessageBox.Show("File not found!");
-                return;
-            }
+            //Anfangswert setzen, um sinnvoll vergleichen zu können.
 
-            double maxTemp = double.MinValue;
-            string maxTempDetails = string.Empty;
 
-            try
-            {
-                using (var reader = new StreamReader(csvFilePath))
-                {
-                    reader.ReadLine(); 
+            //In einer Schleife die Werte holen und auswerten. Den größten Wert "merken".
 
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        var columns = line.Split(',');
 
-                        if (columns.Length == 3)
-                        {
-                            var device = columns[0].Trim();
-                            var time = columns[1].Trim();
-                            var tempStr = columns[2].Trim();
+            //Datei wieder freigeben.
 
-                            if (double.TryParse(tempStr, out double temp))
-                            {
-                                temp = temp / 10.0; 
 
-                                if (temp > maxTemp)
-                                {
-                                    maxTemp = temp;
-                                    maxTempDetails = $"Device: {device}, Time: {time}, Temperature: {temp:F1}";
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine($"Skipping invalid temperature: {tempStr}");
-                            }
-                        }
-                    }
-                }
+            //Höchstwert auf Oberfläche ausgeben.
 
-                
-                if (maxTemp != double.MinValue)
-                {
-                    lblAusgabe.Content = $"Höchste Temperatur: {maxTempDetails}";
-                }
-                else
-                {
-                    lblAusgabe.Content = "Keine gültigen Daten gefunden.";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
+            MessageBox.Show("Gleich kachelt das Programm...");
+            //kommentieren Sie die Exception aus.
+            throw new Exception("peng");
         }
     }
 }
