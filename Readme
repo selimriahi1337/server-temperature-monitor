@@ -1,0 +1,14 @@
+Important Notes: 
+To make the project works you must install the CSV and the Bin folder. 
+You can find a copy inside Nextcloud.
+
+
+Important Development Rules: 
+You must clone the Master branch and not the main. 
+Always pull the actuall master in order to create a feature branch.
+
+++++++++++++++++++++++++++++
+
+How to use the tool:
+Its very simple just u need to select two dates then you have to click the button in order to become the highestTemp during that period.
+
